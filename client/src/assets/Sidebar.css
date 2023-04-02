@@ -1,0 +1,15 @@
+.Sidebar {
+  width: 25%;
+  margin-left: -50px;
+  background-color: #eefefb;
+  border: solid 1px grey;
+  color: black;
+}
+.Title {
+  text-align: center;
+  margin: 10px;
+}
+.Sidebar p {
+  font-weight: bold;
+  font-size: 18px;
+}

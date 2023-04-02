@@ -1,19 +1,33 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../assets/Navbar.css';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { Link } from 'react-router-dom';
+import ConnectButton from './ConnectButton';
 
 function MyNavbar() {
   return (
     <div>
-      <Navbar bg="primary" expand="lg">
+      <Navbar bg="primary" expand="lg" className="Nav">
         <Container fluid>
-          <Navbar.Brand href="#">
-            <a href="/">Luxury Yacht</a>
+          <Navbar.Brand className="Brand">
+            <Link
+              to={'/'}
+              style={{
+                textDecoration: 'none',
+                color: 'white',
+                fontWeight: 'bold',
+                fontSize: '1.4em',
+                marginLeft: '20px',
+              }}
+            >
+              Luxury Yacht
+            </Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
@@ -33,19 +47,18 @@ function MyNavbar() {
                 </NavDropdown.Item>
               </NavDropdown>
               <Nav.Link href="#action2">My Favorites</Nav.Link>
+              <Form className="d-flex">
+                <Form.Control
+                  type="search"
+                  placeholder="Search"
+                  className="me-2 rounded-pill"
+                  aria-label="Search"
+                />
+                <Button variant="light ">Search</Button>
+              </Form>
             </Nav>
-            <Form className="d-flex">
-              <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-              />
-              <Button variant="outline-light">Search</Button>
-            </Form>
-            <Button variant="outline-light" className="">
-              Connexion
-            </Button>
+
+            <ConnectButton></ConnectButton>
           </Navbar.Collapse>
         </Container>
       </Navbar>
