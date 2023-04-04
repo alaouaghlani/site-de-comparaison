@@ -5,7 +5,7 @@ import Voiliers from './Voiliers';
 import data from '../data';
 
 function Home() {
-  const [priceRange, setPriceRange] = useState([0, 1000]); //initial price range is set to [0,1000]
+  const [priceRange, setPriceRange] = useState([0, 1000]);
   const products = data.voiliers.filter(
     (product) =>
       product.price >= priceRange[0] && product.price <= priceRange[1]
@@ -14,9 +14,8 @@ function Home() {
   return (
     <div style={{ display: 'flex' }}>
       <Sidebar priceRange={priceRange} setPriceRange={setPriceRange}></Sidebar>
-      <Voiliers voiliers={data.voiliers}></Voiliers>
+      <Voiliers voiliers={products}></Voiliers>
     </div>
   );
 }
-
 export default Home;

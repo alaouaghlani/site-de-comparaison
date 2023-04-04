@@ -5,16 +5,23 @@ import { Slider } from '@mui/material';
 import data from '../data';
 
 const Sidebar = (props) => {
-  const [priceRange, setPriceRange] = useState([0, 100000000]); //initial price range is set to [0,1000]
-  const handlePriceRangeChange = (event, newValue) => {
-    setPriceRange(newValue);
-  };
+  const prices = data.voiliers.map((voilier) => voilier.price);
+  const minPrice = Math.min(...prices);
+  const maxPrice = Math.max(...prices);
+  const [priceRange, setPriceRange] = useState(props.priceRange);
+
   useEffect(() => {
     fetch('/voilier');
   }, []);
+
+  const handlePriceRangeChange = (event, newPriceRange) => {
+    props.setPriceRange(newPriceRange);
+  };
+
   const filteredProducts = data.voiliers.filter((product) => {
     return product.price >= priceRange[0] && product.price <= priceRange[1];
   });
+
   return (
     <Container className="Sidebar">
       <h2 className="Title">Filtrer</h2>
@@ -24,8 +31,8 @@ const Sidebar = (props) => {
         onChange={(event, newPriceRange) => props.setPriceRange(newPriceRange)}
         valueLabelDisplay="auto"
         aria-labelledby="range-slider"
-        min={0}
-        max={100000000}
+        min={minPrice}
+        max={maxPrice}
         style={{ maxWidth: '75%', margin: '15px' }}
       ></Slider>
       <hr />
