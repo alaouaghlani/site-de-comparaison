@@ -51,7 +51,7 @@ const data = {
       type: 'Schooner',
       height: 64.5,
       price: 12000000,
-      brand: 'Van Der Graaf',
+      brand: 'Van Der Graaff',
       rating: 4.5,
       description:
         'The 2010 three mast Schooner built in the Netherlands, called ATLANTIC is magnificent replica of the 1903 William Gardener designed sailing yacht with the same name.',

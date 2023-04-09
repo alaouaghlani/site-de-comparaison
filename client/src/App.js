@@ -11,7 +11,7 @@ function App() {
     <BrowserRouter>
       <div className="App d-flex flex-column">
         <MyNavbar></MyNavbar>
-        <main className="main">
+        <main className="main ">
           <Container>
             <Routes>
               <Route path="/" element={<Home></Home>} />

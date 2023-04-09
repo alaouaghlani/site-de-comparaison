@@ -20,7 +20,7 @@ function MyNavbar() {
               to={'/'}
               style={{
                 textDecoration: 'none',
-                color: 'white',
+                color: '#fff680',
                 fontWeight: 'bold',
                 fontSize: '1.4em',
                 marginLeft: '20px',
