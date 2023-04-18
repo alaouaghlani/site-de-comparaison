@@ -6,8 +6,8 @@
   margin-bottom: 20px;
 }
 .Left img {
-  width: 650px;
-  height: 500px;
+  width: 100%;
+  height: 100%;
   object-fit: fill;
 }
 .Right {
@@ -16,7 +16,7 @@
   background-color: #eefefb;
 }
 .Description {
-  font-size: 20px;
+  font-size: 18px;
   padding: 20px;
 }
 .More-details {
@@ -26,7 +26,7 @@
 }
 .Brand-title {
   text-align: center;
-  font-size: 2em;
+  font-size: 30px;
   font-weight: bold;
   margin: 10px;
 }

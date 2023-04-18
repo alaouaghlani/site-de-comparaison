@@ -11,9 +11,9 @@ const Sidebar = (props) => {
   const maxPrice = Math.max(...prices);
   const [priceRange, setPriceRange] = useState([]);
 
-  useEffect(() => {
-    fetch('/voilier');
-  }, []);
+  // useEffect(() => {
+  //   fetch('/voilier');
+  // }, []);
 
   const handlePriceRangeChange = (event, newPriceRange) => {
     setPriceRange(newPriceRange);
@@ -36,7 +36,7 @@ const Sidebar = (props) => {
     }
   };
   return (
-    <Container className="Sidebar">
+    <Container className="Sidebar ">
       <h2 className="Title">Filtrer</h2>
       <p>Prix</p>
       <Slider
@@ -66,7 +66,7 @@ const Sidebar = (props) => {
       <Form>
         {data.voiliers.map((voilier) => (
           <Form.Check
-            key={voilier.height}
+            key={voilier.slug}
             type="checkbox"
             label={voilier.height}
             value={voilier.height}

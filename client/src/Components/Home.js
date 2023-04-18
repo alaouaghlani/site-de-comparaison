@@ -5,6 +5,8 @@ import Voiliers from './Voiliers';
 import data from '../data';
 
 function Home() {
+  //
+
   const prices = data.voiliers.map((voilier) => voilier.price);
   const minPrice = Math.min(...prices);
   const maxPrice = Math.max(...prices);
