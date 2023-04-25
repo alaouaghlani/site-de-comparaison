@@ -2,30 +2,28 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/Voiliers.css';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
+import Card from 'react-bootstrap/Card';
 
 const Voiliers = ({ voiliers }) => {
   return (
-    <div className="voiliers col-sm-12 col-md-6 col-lg-10">
+    <div className="voiliers">
       {voiliers.map((voilier) => (
-        <div key={voilier.slug} className="voilier">
-          <Link to={`/voilier/${voilier.slug}`}>
-            <img src={voilier.image} alt={voilier.name} />
+        <Card style={{ width: '20%' }} key={voilier._id}>
+          <Link to={`/voiliers/${voilier._id}`}>
+            <Card.Img
+              variant="top"
+              src={voilier.images}
+              alt={voilier.Nom}
+            ></Card.Img>
           </Link>
-          <div className="product-info">
-            <Link
-              to={`/voilier/${voilier.slug}`}
-              className="link-no-decoration"
-            >
-              <p>{voilier.name}</p>
-            </Link>
-            <p>
-              <strong>${voilier.price}</strong>
-            </p>
-            <Link to={`/voilier/${voilier.slug}`}>
-              <Button className="viewMoreButton ">View More</Button>
-            </Link>
-          </div>
-        </div>
+          <Card.Body>
+            <Card.Title>{voilier.Nom}</Card.Title>
+            {/* <Card.Text>{voilier.Description}</Card.Text> */}
+          </Card.Body>
+          <Link to={`/voiliers/${voilier._id}`}>
+            <Button className="viewMoreButton"> View more</Button>
+          </Link>
+        </Card>
       ))}
     </div>
   );

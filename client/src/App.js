@@ -1,12 +1,11 @@
 import './App.css';
-import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MyNavbar from './Components/MyNavbar';
 import Home from './Components/Home';
 import VoilierDetails from './Components/VoilierDetails';
 import Container from 'react-bootstrap/esm/Container';
 import Footer from './Components/Footer';
-import data from './data';
+
 function App() {
   //search bar
   // const [searchResult, setSearchResult] = useState([]);
@@ -25,7 +24,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home></Home>} />
               <Route
-                path="/voilier/:slug"
+                path="/voiliers/:id"
                 element={<VoilierDetails></VoilierDetails>}
               />
             </Routes>

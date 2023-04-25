@@ -1,32 +1,42 @@
-import React, { useState } from 'react';
 import '../assets/Home.css';
-import Sidebar from './Sidebar';
 import Voiliers from './Voiliers';
-import data from '../data';
+import SideBar from './Sidebar';
+import useFetch from '../useFetch';
+import { useState } from 'react';
+import Pagination from './Pagination';
 
 function Home() {
   //
+  const [currentpage, setCurrentpage] = useState(1);
+  const [voilierPerPage, setVoiierPerPage] = useState(25);
+  const {
+    data: voiliers,
+    isPending,
+    error,
+  } = useFetch('http://localhost:5000/voiliers');
 
-  const prices = data.voiliers.map((voilier) => voilier.price);
-  const minPrice = Math.min(...prices);
-  const maxPrice = Math.max(...prices);
-  const [priceRange, setPriceRange] = useState([minPrice, maxPrice]);
-  const products = data.voiliers.filter(
-    (product) =>
-      product.price >= priceRange[0] && product.price <= priceRange[1]
-  );
-  const [marqueFilter, setMarqueFilter] = useState([]);
-
+  const lastVoilierIndex = currentpage * voilierPerPage;
+  const firstVoilierIndex = lastVoilierIndex - voilierPerPage;
+  const currentVoiliers = voiliers
+    ? voiliers.slice(firstVoilierIndex, lastVoilierIndex)
+    : [];
   return (
     <div style={{ display: 'flex' }}>
-      <Sidebar
-        priceRange={priceRange}
-        setPriceRange={setPriceRange}
-        marqueFilter={marqueFilter}
-        setMarqueFilter={setMarqueFilter}
-      ></Sidebar>
+      <SideBar></SideBar>
 
-      <Voiliers voiliers={products}></Voiliers>
+      {error && <div>{error}</div>}
+      {isPending && <div>Loading...</div>}
+      {voiliers && (
+        <>
+          <Voiliers voiliers={voiliers} />
+          {/* <Pagination
+            totalVoiliers={voiliers.length}
+            voilierPerPage={voilierPerPage}
+            setCurrentPage={setCurrentpage}
+            currentPage={currentpage}
+          /> */}
+        </>
+      )}
     </div>
   );
 }

@@ -1,41 +1,50 @@
 const mongoose = require('mongoose');
 
-const Yacht = mongoose.model('yahcts', {
-  id: {
-    type: Number,
+const Yacht = mongoose.model(
+  'yachts',
+  {
+    _id: {
+      type: Number,
+    },
+    Nom: {
+      type: String,
+    },
+    Url: {
+      type: String,
+    },
+    Prix: {
+      type: String,
+    },
+    Description: {
+      type: String,
+    },
+    Location: {
+      type: String,
+    },
+    Année: {
+      type: String,
+    },
+    Fabricant: {
+      type: String,
+    },
+    Modèle: {
+      type: String,
+    },
+    Type: {
+      type: String,
+    },
+    Longueur: {
+      type: String,
+    },
+    images: [
+      {
+        filename: String,
+        contentType: String,
+        data: String,
+      },
+    ],
   },
-  name: {
-    type: String,
-  },
-  url: {
-    type: String,
-  },
-  price: {
-    type: String,
-  },
-  description: {
-    type: String,
-  },
-  location: {
-    type: String,
-  },
-  annee: {
-    type: Number,
-  },
-  fabricant: {
-    type: String,
-  },
-  modele: {
-    type: String,
-  },
-  type: {
-    type: String,
-  },
-  longueur: {
-    type: String,
-  },
-  images: {
-    type: Array,
-  },
-});
+  'yachts'
+);
+
 module.exports = Yacht;
