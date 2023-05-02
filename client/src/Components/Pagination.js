@@ -1,6 +1,6 @@
-import React from 'react';
+import '../assets/Pagination.css';
 import { Button } from 'react-bootstrap';
-
+console.log();
 function Pagination({
   totalVoiliers,
   voilierPerPage,
@@ -8,15 +8,21 @@ function Pagination({
   currentPage,
 }) {
   const pageNumber = [];
-  for (let i = 0; i < Math.ceil(totalVoiliers / voilierPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(totalVoiliers / voilierPerPage); i++) {
     pageNumber.push(i);
   }
   return (
-    <div>
+    <div
+      className="pagination"
+      style={{ display: 'flex', justifyContent: 'center' }}
+    >
       {pageNumber.map((page, index) => {
         return (
-          <Button key={index} onClick={() => setCurrentPage(page)}>
-            {page == currentPage ? 'active' : ''}
+          <Button
+            style={{ margin: '5px', padding: '' }}
+            key={index}
+            onClick={() => setCurrentPage(page)}
+          >
             {page}
           </Button>
         );

@@ -6,22 +6,17 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-// import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from 'react-router-dom';
 import ConnectButton from './ConnectButton';
-// import data from '../data';
 import * as Icon from 'react-bootstrap-icons';
 
 function MyNavbar(props) {
-  //search bar
-  // const [searchQuery, setSearchQuery] = useState('');
+  const [searchValue, setSearchValue] = useState('');
 
-  // const handleInputChange = (event) => {
-  //   setSearchQuery(event.target.value);
-  // };
-  // const HandleSearch = () => {
-  //   props.performSearch(searchQuery);
-  // };
+  const handleSearchChange = (event) => {
+    setSearchValue(event.target.value);
+  };
+
   return (
     <div>
       <Navbar bg="primary" expand="lg" className="Nav">
@@ -31,10 +26,9 @@ function MyNavbar(props) {
               to={'/'}
               style={{
                 textDecoration: 'none',
-                color: '#fff680',
+                color: '#fff',
                 fontWeight: 'bold',
                 fontSize: '1.4em',
-                marginLeft: '20px',
               }}
             >
               Luxury Yacht
@@ -47,33 +41,26 @@ function MyNavbar(props) {
               style={{ maxHeight: '100px' }}
               navbarScroll
             >
-              {/* <NavDropdown title="Categories" id="navbarScrollingDropdown">
-                {data.voiliers.map((voilier) => (
-                  <NavDropdown.Item href="#action3">
-                    {voilier.category}
-                  </NavDropdown.Item>
-                ))}
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action5">
-                  Something else here
-                </NavDropdown.Item>
-              </NavDropdown> */}
-              <Nav.Link href="#action2">My Favorites</Nav.Link>
+              <Nav.Link href="#action2" className="NavLink">
+                My Favorites
+              </Nav.Link>
 
               <Form className="d-flex ">
                 <Form.Control
                   type="search"
                   placeholder="Search"
-                  className="me-2 rounded-pill"
+                  className="me-2 rounded-pill SearchBox"
                   aria-label="Search"
+                  value={searchValue}
+                  onChange={handleSearchChange}
                 />
-                <Button variant="light " className="me-2 rounded-pill">
-                  <Icon.Search></Icon.Search>
+                <Button variant="light" className="rounded-pill SearchButton">
+                  <Icon.Search className="SearchIcon" />
                 </Button>
               </Form>
             </Nav>
 
-            <ConnectButton></ConnectButton>
+            <ConnectButton className="ConnexionButton" />
           </Navbar.Collapse>
         </Container>
       </Navbar>

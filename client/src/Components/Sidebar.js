@@ -1,28 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import '../assets/Sidebar.css';
 import { Container, Form } from 'react-bootstrap';
 import { Slider } from '@mui/material';
-import data from '../data';
+import useFetch from '../useFetch';
 
-const Sidebar = (props) => {
-  //Price Slider
-  const prices = data.voiliers.map((voilier) => voilier.price);
+const Sidebar = () => {
+  const {
+    data: voiliers,
+    isPending,
+    error,
+  } = useFetch('http://localhost:5000/voiliers'); //Price Slider
+  const prices = voiliers?.map((voilier) => voilier.Prix) || [];
   const minPrice = Math.min(...prices);
   const maxPrice = Math.max(...prices);
   const [priceRange, setPriceRange] = useState([]);
-
-  // useEffect(() => {
-  //   fetch('/voilier');
-  // }, []);
 
   const handlePriceRangeChange = (event, newPriceRange) => {
     setPriceRange(newPriceRange);
   };
 
-  const products = data.voiliers.filter(
-    (product) =>
-      product.price >= priceRange[0] && product.price <= priceRange[1]
-  );
+  const products =
+    voiliers?.filter(
+      (product) =>
+        product.Prix >= priceRange[0] && product.Prix <= priceRange[1]
+    ) || [];
 
   //Marque
   const [marqueFilter, setMarqueFilter] = useState([]);
@@ -35,13 +36,25 @@ const Sidebar = (props) => {
       setMarqueFilter(marqueFilter.filter((f) => f !== marque));
     }
   };
+  // Longueur
+  const [longueurFilter, setLongueurFilter] = useState([]);
+  const handleLongueurFilterChange = (event) => {
+    const longueur = event.target.value;
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      setLongueurFilter([...longueurFilter, longueur]);
+    } else {
+      setLongueurFilter(longueurFilter.filter((f) => f !== longueur));
+    }
+  };
+
   return (
     <Container className="Sidebar ">
       <h2 className="Title">Filtrer</h2>
       <p>Prix</p>
       <Slider
-        value={props.priceRange}
-        onChange={(event, newPriceRange) => props.setPriceRange(newPriceRange)}
+        value={priceRange}
+        onChange={(event, newPriceRange) => setPriceRange(newPriceRange)}
         valueLabelDisplay="auto"
         aria-labelledby="range-slider"
         min={minPrice}
@@ -52,34 +65,39 @@ const Sidebar = (props) => {
 
       <p>Marque</p>
       <Form>
-        {data.voiliers.map((voilier) => (
+        {voiliers?.map((voilier) => (
           <Form.Check
-            key={voilier.brand}
+            key={voilier._id}
             type="checkbox"
-            label={voilier.brand}
-            value={voilier.brand}
+            label={voilier.Fabricant}
+            value={voilier.Fbaricant}
             onChange={handleMarqueFilterChange}
           ></Form.Check>
-        ))}
+        )) || []}
       </Form>
       <p>Longueur</p>
       <Form>
-        {data.voiliers.map((voilier) => (
+        {voiliers?.map((voilier) => (
           <Form.Check
-            key={voilier.slug}
+            key={voilier._id}
             type="checkbox"
-            label={voilier.height}
-            value={voilier.height}
+            label={voilier.Longueur}
+            value={voilier.Longueur}
             onChange={handleMarqueFilterChange}
           ></Form.Check>
-        ))}
+        )) || []}
       </Form>
       <p>Annee</p>
       <Form>
-        <Form.Check type="checkbox" id="" label=""></Form.Check>
-        <Form.Check type="checkbox" id="" label=""></Form.Check>
-        <Form.Check type="checkbox" id="" label=""></Form.Check>
-        <Form.Check type="checkbox" id="" label=""></Form.Check>
+        {voiliers?.map((voilier) => (
+          <Form.Check
+            key={voilier._id}
+            type="checkbox"
+            label={voilier.Année}
+            value={voilier.Année}
+            onChange={handleMarqueFilterChange}
+          ></Form.Check>
+        )) || []}
       </Form>
     </Container>
   );
