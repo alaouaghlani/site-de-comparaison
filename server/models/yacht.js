@@ -1,3 +1,4 @@
+const { Schema } = require('mongoose');
 const mongoose = require('mongoose');
 
 const Yacht = mongoose.model(
@@ -38,9 +39,8 @@ const Yacht = mongoose.model(
     },
     images: [
       {
-        filename: String,
-        contentType: String,
-        data: String,
+        type: Schema.Types.ObjectId,
+        ref: 'File',
       },
     ],
   },

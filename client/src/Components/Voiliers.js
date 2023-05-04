@@ -3,17 +3,24 @@ import '../assets/Voiliers.css';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
+
 const Voiliers = ({ voiliers }) => {
   return (
     <div className="voiliers">
       {voiliers.map((voilier) => (
         <Card
           key={voilier._id}
-          style={{ width: '20%' }}
+          style={{
+            width: '20%',
+          }}
           className="m-3 hover-shadow"
         >
           <Link to={`/voiliers/${voilier._id}`} className="link-no-decoration">
-            <Card.Img variant="top" src={voilier.images} alt={voilier.Nom} />
+            <Card.Img
+              variant="top"
+              src={require('../images/pexels-oliver-sjöström-1295036.jpg')}
+              alt={voilier.Nom}
+            />
           </Link>
           <Card.Body>
             <Card.Title className="text-center">{voilier.Nom}</Card.Title>

@@ -5,6 +5,7 @@ import Home from './Components/Home';
 import VoilierDetails from './Components/VoilierDetails';
 import Container from 'react-bootstrap/esm/Container';
 import Footer from './Components/Footer';
+import AllVoiliers from './Components/AllVoiliers';
 
 function App() {
   //search bar
@@ -27,6 +28,10 @@ function App() {
                 path="/voiliers/:id"
                 element={<VoilierDetails></VoilierDetails>}
               />
+              <Route
+                path="/voiliers"
+                element={<AllVoiliers></AllVoiliers>}
+              ></Route>
             </Routes>
           </Container>
         </main>

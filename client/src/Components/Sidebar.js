@@ -4,7 +4,7 @@ import { Container, Form } from 'react-bootstrap';
 import { Slider } from '@mui/material';
 import useFetch from '../useFetch';
 
-const Sidebar = () => {
+const Sidebar = ({ id }) => {
   const {
     data: voiliers,
     isPending,
@@ -18,6 +18,15 @@ const Sidebar = () => {
   const handlePriceRangeChange = (event, newPriceRange) => {
     setPriceRange(newPriceRange);
   };
+
+  //avoid repetition
+  const marques = voiliers?.map((voilier) => voilier.Fabricant) || [];
+  const longueurs = voiliers?.map((voilier) => voilier.Longueur) || [];
+  const annees = voiliers?.map((voilier) => voilier.Année) || [];
+
+  const marque = [...new Set(marques)];
+  const longueur = [...new Set(longueurs)];
+  const annee = [...new Set(annees)];
 
   const products =
     voiliers?.filter(
@@ -65,39 +74,39 @@ const Sidebar = () => {
 
       <p>Marque</p>
       <Form>
-        {voiliers?.map((voilier) => (
+        {marque.map((m) => (
           <Form.Check
-            key={voilier._id}
+            key={m}
             type="checkbox"
-            label={voilier.Fabricant}
-            value={voilier.Fbaricant}
+            label={m}
+            value={m}
             onChange={handleMarqueFilterChange}
           ></Form.Check>
-        )) || []}
+        ))}
       </Form>
       <p>Longueur</p>
       <Form>
-        {voiliers?.map((voilier) => (
+        {longueur.map((l) => (
           <Form.Check
-            key={voilier._id}
+            key={l}
             type="checkbox"
-            label={voilier.Longueur}
-            value={voilier.Longueur}
+            label={l}
+            value={l}
             onChange={handleMarqueFilterChange}
           ></Form.Check>
-        )) || []}
+        ))}
       </Form>
       <p>Annee</p>
       <Form>
-        {voiliers?.map((voilier) => (
+        {annee.map((a) => (
           <Form.Check
-            key={voilier._id}
+            key={a}
             type="checkbox"
-            label={voilier.Année}
-            value={voilier.Année}
+            label={a}
+            value={a}
             onChange={handleMarqueFilterChange}
           ></Form.Check>
-        )) || []}
+        ))}
       </Form>
     </Container>
   );

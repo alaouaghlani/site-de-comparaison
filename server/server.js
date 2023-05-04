@@ -7,35 +7,66 @@ const app = express();
 const mongoose = require('mongoose');
 require('./config/connect');
 
-// import yacht model
-const Yacht = require('./models/yacht');
-
 //import multer
 const multer = require('multer');
 
-const upload = multer({ storage: multer.memoryStorage() });
+//import gridfs storage
+const { GridFsStorage } = require('multer-gridfs-storage');
+
+const Storage = new GridFsStorage({
+  url: 'mongodb+srv://maram:mongodbtrial@cluster0.xus4tzx.mongodb.net/yachtworld',
+  file: (req, file) => {
+    return {
+      bucketName: 'uploads',
+      filename: file.originalname,
+    };
+  },
+});
+const upload = multer({ Storage });
+
+app.post('/upload', upload.single('file'), (req, res) => {
+  res.json({ file: req.file });
+});
+
+//
+const Grid = require('gridfs-stream');
+
+const conn = mongoose.createConnection(
+  'mongodb+srv://maram:mongodbtrial@cluster0.xus4tzx.mongodb.net/yachtworld'
+);
+
+conn.once('open', () => {
+  const gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection('uploads');
+
+  app.get('/file/:filename', (req, res) => {
+    gfs.files.find({ filename: req.params.filename }).toArray((err, files) => {
+      if (!files || files.length === 0) {
+        return res.status(404).json({
+          message: 'File not found',
+        });
+      }
+
+      const readstream = gfs.createReadStream({
+        filename: files[0].filename,
+      });
+
+      res.set('Content-Type', files[0].contentType);
+
+      return readstream.pipe(res);
+    });
+  });
+});
+
+// import yacht model
+const Yacht = require('./models/yacht');
 
 // import cors
 const cors = require('cors');
 app.use(cors());
 
-//
-app.post('/products', upload.array('images', 10), async (req, res) => {
-  const newProduct = new Product({
-    name: req.body.name,
-    description: req.body.description,
-    price: req.body.price,
-    images: req.files.map((file) => ({
-      name: file.originalname,
-      data: file.buffer,
-      contentType: file.mimetype,
-    })),
-  });
-
-  await newProduct.save();
-
-  res.send('Product uploaded successfully');
-});
+//import file
+File = require('./models/files');
 
 //controllers
 app.get('/voiliers/', async (req, res) => {
@@ -47,6 +78,7 @@ app.get('/voiliers/', async (req, res) => {
   }
 });
 
+// get voiliers by id
 app.get('/voiliers/:id', async (req, res) => {
   try {
     const voilier = await Yacht.findById(req.params.id);
@@ -56,6 +88,17 @@ app.get('/voiliers/:id', async (req, res) => {
   }
 });
 
+// get random voiliers
+app.get('/random-voiliers', async (req, res) => {
+  try {
+    const randomVoiliers = await Yacht.aggregate([{ $sample: { size: 8 } }]);
+    res.send(randomVoiliers);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+//server port listen
 app.listen(5000, () => {
   console.log('Server is listening on port 5000');
 });

@@ -19,14 +19,14 @@ function MyNavbar(props) {
 
   return (
     <div>
-      <Navbar bg="primary" expand="lg" className="Nav">
+      <Navbar bg="transparent" expand="lg" className="Nav">
         <Container fluid>
           <Navbar.Brand className="Brand">
             <Link
               to={'/'}
               style={{
                 textDecoration: 'none',
-                color: '#fff',
+                color: '#000',
                 fontWeight: 'bold',
                 fontSize: '1.4em',
               }}
@@ -41,12 +41,24 @@ function MyNavbar(props) {
               style={{ maxHeight: '100px' }}
               navbarScroll
             >
-              <Nav.Link href="#action2" className="NavLink">
+              <Nav.Link
+                href="#action2"
+                className="NavLink"
+                style={{ color: 'black' }}
+              >
                 My Favorites
+              </Nav.Link>
+              <Nav.Link
+                href="/voiliers"
+                className="NavLink"
+                style={{ color: 'black' }}
+              >
+                All sailboats
               </Nav.Link>
 
               <Form className="d-flex ">
                 <Form.Control
+                  style={{ border: '1px black solid' }}
                   type="search"
                   placeholder="Search"
                   className="me-2 rounded-pill SearchBox"
@@ -54,7 +66,11 @@ function MyNavbar(props) {
                   value={searchValue}
                   onChange={handleSearchChange}
                 />
-                <Button variant="light" className="rounded-pill SearchButton">
+                <Button
+                  variant="light"
+                  className="rounded-pill SearchButton"
+                  style={{ border: '1px black solid' }}
+                >
                   <Icon.Search className="SearchIcon" />
                 </Button>
               </Form>
