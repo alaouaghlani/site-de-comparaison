@@ -1,22 +1,59 @@
 import React, { useState } from 'react';
 import '../assets/Sidebar.css';
-import { Container, Form } from 'react-bootstrap';
+import { Button, Container, Form } from 'react-bootstrap';
 import { Slider } from '@mui/material';
 import useFetch from '../useFetch';
 
-const Sidebar = ({ id }) => {
+const Sidebar = ({
+  priceRange,
+  setPriceRange,
+  marqueFilter,
+  setMarqueFilter,
+  longueurFilter,
+  setLongueurFilter,
+  anneeFilter,
+  setAnneeFilter,
+}) => {
   const {
     data: voiliers,
     isPending,
     error,
   } = useFetch('http://localhost:5000/voiliers'); //Price Slider
-  const prices = voiliers?.map((voilier) => voilier.Prix) || [];
-  const minPrice = Math.min(...prices);
-  const maxPrice = Math.max(...prices);
-  const [priceRange, setPriceRange] = useState([]);
+  const pricesString =
+    voiliers
+      ?.map((voilier) => {
+        const price = voilier.Prix;
+        if (price) {
+          const numericString = price
+            .match(/\d[\d\s,.]*/)?.[0]
+            .replace(/[^\d.]/g, '')
+            .replace(',', '.');
+          if (numericString) {
+            return Number(numericString);
+          } else {
+            // console.log(`Could not convert "${price}" to a number`);
+          }
+        }
+        return null;
+      })
+      .filter((price) => price !== null) || [];
 
-  const handlePriceRangeChange = (event, newPriceRange) => {
-    setPriceRange(newPriceRange);
+  const minPrice = Math.min(...pricesString);
+  const maxPrice = Math.max(...pricesString);
+
+  //max display
+  const [maxDisplayMarque, setMaxDisplayMarque] = useState(10);
+  const handleShowMoreMarque = () => {
+    setMaxDisplayMarque(maxDisplayMarque + 5);
+  };
+
+  const [maxDisplayLongueur, setMaxDisplayLongueur] = useState(10);
+  const handleShowMoreLongueur = () => {
+    setMaxDisplayLongueur(maxDisplayLongueur + 5);
+  };
+  const [maxDisplayAnnee, setMaxDisplayAnnee] = useState(10);
+  const handleShowMoreAnnee = () => {
+    setMaxDisplayAnnee(maxDisplayAnnee + 5);
   };
 
   //avoid repetition
@@ -28,32 +65,41 @@ const Sidebar = ({ id }) => {
   const longueur = [...new Set(longueurs)];
   const annee = [...new Set(annees)];
 
-  const products =
-    voiliers?.filter(
-      (product) =>
-        product.Prix >= priceRange[0] && product.Prix <= priceRange[1]
-    ) || [];
+  //Price
+  const handlePriceRangeChange = (event, newPriceRange) => {
+    setPriceRange(newPriceRange);
+  };
 
   //Marque
-  const [marqueFilter, setMarqueFilter] = useState([]);
+
   const handleMarqueFilterChange = (event) => {
-    const marque = event.target.value;
+    const brand = event.target.value;
     const isChecked = event.target.checked;
     if (isChecked) {
-      setMarqueFilter([...marqueFilter, marque]);
+      setMarqueFilter([...marqueFilter, brand]);
     } else {
-      setMarqueFilter(marqueFilter.filter((f) => f !== marque));
+      setMarqueFilter(marqueFilter.filter((f) => f !== brand));
     }
   };
   // Longueur
-  const [longueurFilter, setLongueurFilter] = useState([]);
+
   const handleLongueurFilterChange = (event) => {
-    const longueur = event.target.value;
+    const height = event.target.value;
     const isChecked = event.target.checked;
     if (isChecked) {
-      setLongueurFilter([...longueurFilter, longueur]);
+      setLongueurFilter([...longueurFilter, height]);
     } else {
-      setLongueurFilter(longueurFilter.filter((f) => f !== longueur));
+      setLongueurFilter(longueurFilter.filter((f) => f !== height));
+    }
+  };
+  // Annee
+  const handleAnneeFilterChange = (event) => {
+    const year = event.target.value;
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      setAnneeFilter([...anneeFilter, year]);
+    } else {
+      setAnneeFilter(anneeFilter.filter((f) => f !== year));
     }
   };
 
@@ -63,7 +109,7 @@ const Sidebar = ({ id }) => {
       <p>Prix</p>
       <Slider
         value={priceRange}
-        onChange={(event, newPriceRange) => setPriceRange(newPriceRange)}
+        onChange={handlePriceRangeChange}
         valueLabelDisplay="auto"
         aria-labelledby="range-slider"
         min={minPrice}
@@ -74,7 +120,7 @@ const Sidebar = ({ id }) => {
 
       <p>Marque</p>
       <Form>
-        {marque.map((m) => (
+        {marque.slice(0, maxDisplayMarque).map((m) => (
           <Form.Check
             key={m}
             type="checkbox"
@@ -84,30 +130,49 @@ const Sidebar = ({ id }) => {
           ></Form.Check>
         ))}
       </Form>
+      {marque.length > maxDisplayMarque && (
+        <Button variant="link" className="my-3" onClick={handleShowMoreMarque}>
+          {` (${marque.length - maxDisplayMarque} more)`}
+        </Button>
+      )}
       <p>Longueur</p>
       <Form>
-        {longueur.map((l) => (
+        {longueur.slice(0, maxDisplayLongueur).map((l) => (
           <Form.Check
             key={l}
             type="checkbox"
             label={l}
             value={l}
-            onChange={handleMarqueFilterChange}
+            onChange={handleLongueurFilterChange}
           ></Form.Check>
         ))}
       </Form>
+      {longueur.length > maxDisplayLongueur && (
+        <Button
+          variant="link"
+          className="my-3"
+          onClick={handleShowMoreLongueur}
+        >
+          {` (${longueur.length - maxDisplayLongueur} more)`}
+        </Button>
+      )}
       <p>Annee</p>
       <Form>
-        {annee.map((a) => (
+        {annee.slice(0, maxDisplayAnnee).map((a) => (
           <Form.Check
             key={a}
             type="checkbox"
             label={a}
             value={a}
-            onChange={handleMarqueFilterChange}
+            onChange={handleAnneeFilterChange}
           ></Form.Check>
         ))}
       </Form>
+      {annee.length > maxDisplayAnnee && (
+        <Button variant="link" className="my-3" onClick={handleShowMoreAnnee}>
+          {` (${annee.length - maxDisplayAnnee} more)`}
+        </Button>
+      )}
     </Container>
   );
 };

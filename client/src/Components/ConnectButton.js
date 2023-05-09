@@ -26,7 +26,7 @@ const ConnectButton = () => {
           backgroundColor: '#3f5c88',
           border: 'none',
           borderRadius: '5px',
-          fontSize: '1.2rem',
+          fontSize: '1rem',
           fontWeight: '500',
           padding: '10px 20px',
           margin: '0 10px',

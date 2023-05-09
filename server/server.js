@@ -1,72 +1,64 @@
-// import express
+// import required
 const express = require('express');
-//import the connect file
-const app = express();
-
-// import the connect file
 const mongoose = require('mongoose');
 require('./config/connect');
-
-//import multer
+const Yacht = require('./models/yacht');
+const cors = require('cors');
+File = require('./models/files');
+const { GridFsStorage } = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+const bodyParser = require('body-parser');
 const multer = require('multer');
 
-//import gridfs storage
-const { GridFsStorage } = require('multer-gridfs-storage');
-
-const Storage = new GridFsStorage({
-  url: 'mongodb+srv://maram:mongodbtrial@cluster0.xus4tzx.mongodb.net/yachtworld',
-  file: (req, file) => {
-    return {
-      bucketName: 'uploads',
-      filename: file.originalname,
-    };
-  },
-});
-const upload = multer({ Storage });
-
-app.post('/upload', upload.single('file'), (req, res) => {
-  res.json({ file: req.file });
-});
-
-//
-const Grid = require('gridfs-stream');
-
-const conn = mongoose.createConnection(
-  'mongodb+srv://maram:mongodbtrial@cluster0.xus4tzx.mongodb.net/yachtworld'
-);
-
-conn.once('open', () => {
-  const gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection('uploads');
-
-  app.get('/file/:filename', (req, res) => {
-    gfs.files.find({ filename: req.params.filename }).toArray((err, files) => {
-      if (!files || files.length === 0) {
-        return res.status(404).json({
-          message: 'File not found',
-        });
-      }
-
-      const readstream = gfs.createReadStream({
-        filename: files[0].filename,
-      });
-
-      res.set('Content-Type', files[0].contentType);
-
-      return readstream.pipe(res);
-    });
-  });
-});
-
-// import yacht model
-const Yacht = require('./models/yacht');
-
-// import cors
-const cors = require('cors');
+const app = express();
+// Middlewares
+// app.use(bodyParser.json());
 app.use(cors());
 
-//import file
-File = require('./models/files');
+// const connection = mongoose.connection;
+// let gfs;
+// connection.once('open', () => {
+//   // Init stream
+//   gfs = Grid(connection.db, mongoose.mongo);
+//   gfs.collection('fs');
+// });
+
+// // Create storage engine
+// const storage = new GridFsStorage({
+//   url: 'mongodb://localhost/yachtworld',
+//   file: (req, file) => {
+//     return {
+//       filename: file.originalname,
+//     };
+//   },
+// });
+
+// const upload = multer({ storage });
+
+// app.get('/images/:filename', (req, res) => {
+//   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+//     // Check if file exists
+//     if (!file || file.length === 0) {
+//       return res.status(404).json({
+//         err: 'No file exists',
+//       });
+//     }
+
+//     // Read output to browser
+//     const readstream = gfs.createReadStream(file.filename);
+//     readstream.pipe(res);
+//   });
+// });
+
+// app.get('/yachts', (req, res) => {
+//   yachts.find({}, (err, data) => {
+//     if (err) {
+//       res.status(500).send(err);
+//     } else {
+//       res.status(200).send(data);
+//     }
+//   });
+// });
 
 //controllers
 app.get('/voiliers/', async (req, res) => {

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 mongoose
   .connect(
-    'mongodb+srv://maram:mongodbtrial@cluster0.xus4tzx.mongodb.net/yachtworld',
+    'mongodb+srv://maram:mongodbtrial@cluster0.xus4tzx.mongodb.net/YachtInfos',
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,

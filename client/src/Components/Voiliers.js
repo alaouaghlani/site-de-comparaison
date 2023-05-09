@@ -18,12 +18,13 @@ const Voiliers = ({ voiliers }) => {
           <Link to={`/voiliers/${voilier._id}`} className="link-no-decoration">
             <Card.Img
               variant="top"
-              src={require('../images/pexels-oliver-sjöström-1295036.jpg')}
+              src={require('../images/ron-dauphin-_80Yw7o7hlo-unsplash.jpg')}
               alt={voilier.Nom}
             />
           </Link>
           <Card.Body>
             <Card.Title className="text-center">{voilier.Nom}</Card.Title>
+            <Card.Text className="text-center"> {voilier.Prix}</Card.Text>
           </Card.Body>
           <Link to={`/voiliers/${voilier._id}`} className="link-no-decoration">
             <Button variant="dark" className="w-100">

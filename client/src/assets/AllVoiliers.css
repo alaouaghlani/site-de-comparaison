@@ -1,6 +1,11 @@
 .Allsailboats {
   display: flex;
+  flex-wrap: wrap;
 }
 .theSideBar {
-  width: 50%;
+  flex: 1;
+  padding-right: 10px;
+}
+.theSailBoats {
+  flex: 5;
 }

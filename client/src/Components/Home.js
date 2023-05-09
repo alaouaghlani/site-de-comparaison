@@ -1,6 +1,5 @@
 import '../assets/Home.css';
 import Voiliers from './Voiliers';
-import SideBar from './Sidebar';
 import useFetch from '../useFetch';
 
 import Banner from './Banner';
@@ -25,9 +24,9 @@ function Home() {
           {error && <div className="error">{error}</div>}
           {isPending && <div className="loading">Loading...</div>}
           {voiliers && (
-            <>
+            <div className="random-voiliers">
               <Voiliers voiliers={voiliers} />
-            </>
+            </div>
           )}
         </div>
       </div>

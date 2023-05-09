@@ -1,17 +1,10 @@
-const fs = require('fs');
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const fileSchema = new mongoose.Schema({
+const fileSchema = new Schema({
   filename: String,
   contentType: String,
-  length: Number,
-  chunkSize: Number,
-  uploadDate: Date,
-  metadata: {
-    yachtId: Number,
-  },
+  data: Buffer,
 });
 
-const File = mongoose.model('fs.files', fileSchema, 'fs.files');
-
-module.exports = File;
+module.exports = mongoose.model('File', fileSchema, 'fs.files');

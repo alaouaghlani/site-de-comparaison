@@ -37,12 +37,9 @@ const Yacht = mongoose.model(
     Longueur: {
       type: String,
     },
-    images: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'File',
-      },
-    ],
+    images: {
+      type: String,
+    },
   },
   'yachts'
 );
