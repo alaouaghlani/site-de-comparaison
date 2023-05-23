@@ -1,11 +1,15 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MyNavbar from './Components/MyNavbar';
-import Home from './Components/Home';
-import VoilierDetails from './Components/VoilierDetails';
-import Container from 'react-bootstrap/esm/Container';
+import Home from './Pages/Home';
+import VoilierDetails from './Pages/VoilierDetails';
+import Container from 'react-bootstrap/Container';
 import Footer from './Components/Footer';
-import AllVoiliers from './Components/AllVoiliers';
+import AllVoiliers from './Pages/AllVoiliers';
+import ConnectButton from './Components/ConnectButton';
+import Registration from './Components/Registration';
+import Search from './Components/Search';
+import Compare from './Pages/Compare';
 
 function App() {
   //search bar
@@ -32,6 +36,13 @@ function App() {
                 path="/voiliers"
                 element={<AllVoiliers></AllVoiliers>}
               ></Route>
+              <Route path="/register" element={<Registration />}></Route>
+              <Route
+                path="/ConnectButton"
+                element={<ConnectButton></ConnectButton>}
+              ></Route>
+              <Route path="/search" element={<Search />} />
+              <Route path="/compare" element={<Compare></Compare>}></Route>
             </Routes>
           </Container>
         </main>

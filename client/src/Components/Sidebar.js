@@ -106,7 +106,7 @@ const Sidebar = ({
   return (
     <Container className="Sidebar ">
       <h2 className="Title">Filtrer</h2>
-      <p>Prix</p>
+      <p>Price</p>
       <Slider
         value={priceRange}
         onChange={handlePriceRangeChange}
@@ -114,11 +114,11 @@ const Sidebar = ({
         aria-labelledby="range-slider"
         min={minPrice}
         max={maxPrice}
-        style={{ maxWidth: '75% ', margin: '15px' }}
+        style={{ maxWidth: '75% ', margin: '15px', color: '#199FB1' }}
       ></Slider>
       <hr />
 
-      <p>Marque</p>
+      <p>Brand</p>
       <Form>
         {marque.slice(0, maxDisplayMarque).map((m) => (
           <Form.Check
@@ -135,7 +135,7 @@ const Sidebar = ({
           {` (${marque.length - maxDisplayMarque} more)`}
         </Button>
       )}
-      <p>Longueur</p>
+      <p>Length</p>
       <Form>
         {longueur.slice(0, maxDisplayLongueur).map((l) => (
           <Form.Check
@@ -156,7 +156,7 @@ const Sidebar = ({
           {` (${longueur.length - maxDisplayLongueur} more)`}
         </Button>
       )}
-      <p>Annee</p>
+      <p>Year</p>
       <Form>
         {annee.slice(0, maxDisplayAnnee).map((a) => (
           <Form.Check

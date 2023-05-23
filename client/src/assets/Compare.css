@@ -1,0 +1,29 @@
+.title {
+  text-align: center;
+}
+.Compare {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px;
+}
+.compare-button {
+  background-color: #0d5c75;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 10px 20px;
+  margin: 30px;
+}
+.compare-button:hover {
+  background-color: black;
+}
+.SailboatInfo {
+  display: flex;
+  justify-content: space-around;
+}
+.charts {
+  display: flex;
+  justify-content: space-around;
+  margin: 40px;
+}

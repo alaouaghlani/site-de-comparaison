@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/Navbar.css';
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
@@ -9,14 +8,23 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
 import ConnectButton from './ConnectButton';
 import * as Icon from 'react-bootstrap-icons';
+import { Button } from 'react-bootstrap';
 
 function MyNavbar(props) {
   const [searchValue, setSearchValue] = useState('');
+  //eslint-disable-next-line
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearchChange = (event) => {
     setSearchValue(event.target.value);
   };
-
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+    console.log('Search Query:', searchValue);
+    const query = encodeURIComponent(searchValue);
+    setSearchQuery(query);
+    window.location.href = `/search?search=${query}`;
+  };
   return (
     <div>
       <Navbar bg="transparent" expand="lg" className="Nav">
@@ -31,7 +39,7 @@ function MyNavbar(props) {
                 fontSize: '1.4em',
               }}
             >
-              Luxury Yacht
+              Sailify
             </Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
@@ -56,7 +64,7 @@ function MyNavbar(props) {
                 All sailboats
               </Nav.Link>
 
-              <Form className="d-flex ">
+              <Form className="d-flex" onSubmit={handleSearchSubmit}>
                 <Form.Control
                   style={{ border: '1px black solid' }}
                   type="search"
@@ -67,6 +75,7 @@ function MyNavbar(props) {
                   onChange={handleSearchChange}
                 />
                 <Button
+                  type="submit"
                   variant="light"
                   className="rounded-pill SearchButton"
                   style={{ border: '1px black solid' }}
@@ -74,6 +83,17 @@ function MyNavbar(props) {
                   <Icon.Search className="SearchIcon" />
                 </Button>
               </Form>
+              <Nav.Link
+                href="/compare"
+                className="NavLink"
+                style={{
+                  color: 'black',
+                  marginLeft: '60px',
+                  fontWeight: 'bold',
+                }}
+              >
+                Compare
+              </Nav.Link>
             </Nav>
 
             <ConnectButton className="ConnexionButton" />
